@@ -39,8 +39,10 @@
           display=(data)=>{
             
             const display = data.map((v)=>{
-                return `<tr><td>${v.id}</td><td>${v.title}</td><td>${v.url}</td><td>${v.thumbnailUrl}</td>
+                if(v.id <= 20){
+                return `<tr><td>${v.id}</td><td>${v.title}</td><td<img src=${v.url}width='50px' height='50px'></td><td>${v.thumbnailUrl}</td>
                     </tr>`
+                }
             })
             document.getElementById("table").innerHTML = display.join(' ');
          }
