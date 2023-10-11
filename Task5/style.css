@@ -1,0 +1,10 @@
+.image{
+    width: 160px;
+    height: 200px;
+}
+.container{
+    width:400px;
+    height:350px;
+    border: 1px solid black;
+    border-radius: 10px;margin: 15px;
+}
