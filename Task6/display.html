@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+        <table id="display"></table>
+
+    <script>
+        function fetchDataFromAPI(){
+
+        fetch('https://65276509917d673fd76da263.mockapi.io/Product')
+        .then(y=>y.json())
+        .then(y=>{
+            displayData(y);
+        })
+    }
+    fetchDataFromAPI();
+
+    displayData = (data)=>{
+
+            let output = data.map((v)=>{
+
+                    return (`<tr><td>${v.Model}</td><td><img src="${v.rating}"width="40px"heigth="40px"><td>${v.Company}</td></td><td>${v.year}</td><td><button onclick="deleteUser(${v.id})">Delete</button></td></tr>`)
+
+
+            })
+
+            document.getElementById("display").innerHTML = output.join(" ");
+    }
+
+    const deleteUser= (id)=>{
+
+
+fetch(`https://65276509917d673fd76da263.mockapi.io/Product/${id}`,{
+    method:"DELETE"
+})
+.then(y=>y.json())
+.then(y=> {
+    console.log(y);
+    fetchDataFromAPI();
+})
+
+}
+    </script>
+</body>
+</html>
