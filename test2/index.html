@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    
+   
+</head>
+<body>
+    <div class="input-group input-group-sm mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="inputGroup-sizing-sm"style="margin:5px">Search</span>
+        </div>
+        <input type="text"onkeyup="filterdata(y)" id="inputvalue"class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm"style="margin:5px">
+      
+    <button class="btn btn-secondary"style="margin:5px" onclick="sortdata1(y)">Price low-high</button>
+    <button class="btn btn-secondary"style="margin:5px"onclick="sortdata2(y)">Price high-low</button>
+    <div class="row" id="display"></div>
+
+    <script>
+
+        fetch("https://api.escuelajs.co/api/v1/products")
+        .then(y => y.json())
+        .then(y=>{
+            displaydata(y);
+            
+        })
+
+        
+
+        const displaydata =(data)=>{
+
+            const display = data.map((v)=>{
+
+                return (`<div class="col-4">
+                    <div class="card" style="width:23rem;margin:10px">
+                            <img src="${v.category.image}"class="card-img-top" alt="Avatar">
+                            <div class="card-body">
+
+                                <h5 class="card-title">${v.title}</h5>
+                                <p class="card-text">${v.category.name}</p>
+                                <p class="card-text">${v.description}</p>
+                                <p class="card-text">Price: <b>${v.price}</b></p>
+                                <a href ="#"class="btn btn-primary">Add to cart</a>
+                            </div>
+                        </div>
+                            </div>`)
+            })
+            document.getElementById("display").innerHTML= display.join(' ');
+
+        };
+
+
+
+         sortdata1 = (data)=>{
+
+            let sortdataforprice1 = data.sort((a, b)=>{
+
+                if(a.price>b.price){
+                    return 1
+                }
+                else{
+
+                    return -1
+                }
+
+            }) 
+
+            displaydata(sortdataforprice1);
+        }
+
+        sortdata2 = (data)=>{
+
+        let sortdataforprice2 = data.sort((a, b)=>{
+
+            if(a.price <b.price){
+                return 1
+            }
+            else{
+
+                return -1
+            }
+
+        }) 
+
+        displaydata(sortdataforprice2);
+        };
+
+        filterdata=(data)=>{
+
+            const searchdata = document.getElementById("inputvalue").value;
+            
+            const Searchdata= data.filter((v)=>{
+
+                return v.title.includes(searchdata);
+            })
+
+            display(Searchdata)
+            
+        }
+        
+
+    </script>
+</body>
+</html>
