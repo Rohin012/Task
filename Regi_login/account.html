@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    table, td, th {
+      border: 1px solid;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    </style>
+<body>
+    <table id="display"></div>
+    <script>
+
+        let product = [];
+
+            let token = localStorage.getItem("token")
+
+        fetch("https://real-pear-fly-kilt.cyclic.app/accounts",{
+
+            method: "GET",
+            headers : {
+
+            'Authorization': ` Bearer ${token}` 
+        }
+    })
+        
+           
+        .then(y=>y.json())
+        .then(y=> {
+            
+            product = y;
+        console.log(y);
+        displaydata(y);
+
+    });  
+     
+     const displaydata = (data) =>{
+
+        let datas = data.map((v)=>{
+
+            return ( ` <tr>
+                
+                <td>${v.id}</td>
+                <td>${v.firstName}</td>
+                <td>${v.lastMame}</td>
+                <td>${v.email}</td>
+                
+                </tr>`)
+        })
+
+        document.getElementById('display').innerHTML = datas.join(' ');
+     }
+    
+     
+    </script>
+</body>
+</html>
